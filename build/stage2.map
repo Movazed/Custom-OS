@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta Jul 24 2025 02:47:20 (32-bit)
 Copyright (c) 2002-2025 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       25/07/25 20:58:58
+Created on:       25/08/03 19:58:37
 Executable Image: /mnt/c/Projects/workspace/Custom_OS/build/stage2.bin
 creating a RAW Binary Image executable
 
@@ -13,7 +13,7 @@ creating a RAW Binary Image executable
 Group                           Address              Size
 =====                           =======              ====
 
-DGROUP                          0000060c             0000009e
+DGROUP                          000008a2             0000009e
 
 
 
@@ -25,10 +25,10 @@ Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
 _ENTRY                 CODE           AUTO           00000000        00000013
-_TEXT                  CODE           AUTO           00000013        000005f9
-CONST                  DATA           DGROUP         0000060c        0000008c
-CONST2                 DATA           DGROUP         00000698        00000011
-_DATA                  DATA           DGROUP         000006aa        00000000
+_TEXT                  CODE           AUTO           00000013        0000088e
+CONST                  DATA           DGROUP         000008a2        0000008c
+CONST2                 DATA           DGROUP         0000092e        00000011
+_DATA                  DATA           DGROUP         00000940        00000000
 
 
                         +----------------+
@@ -44,16 +44,25 @@ Address        Symbol
 Module: /mnt/c/Projects/workspace/Custom_OS/build/stage2/asm/main.obj(main.asm)
 00000000       entry
 Module: /mnt/c/Projects/workspace/Custom_OS/build/stage2/asm/x86.obj(x86.asm)
-00000013       _x86_div64_32
-00000041       _x86_Video_WriteCharTeletype
+00000013       __U4D
+0000003a*      __U4M
+00000054       _x86_div64_32
+00000082       _x86_Video_WriteCharTeletype
+00000095       _x86_Disk_Reset
+000000aa       _x86_Disk_Read
+000000e1       _x86_Disk_GetDriveParams
+Module: /mnt/c/Projects/workspace/Custom_OS/build/stage2/c/disk.obj(/mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/disk.c)
+00000125+      DISK_Initialize_
+00000199+      DISK_LBA2CHS_
+0000024c+      DISK_ReadSectors_
 Module: /mnt/c/Projects/workspace/Custom_OS/build/stage2/c/main.obj(/mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/main.c)
-00000054       _cstart_
+000002e9       _cstart_
 Module: /mnt/c/Projects/workspace/Custom_OS/build/stage2/c/stdio.obj(/mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/stdio.c)
-000000de+      putc_
-00000105       puts_
-0000013c       _printf
-00000398+      printf_number_
-00000698+      _g_HexChars
+00000373+      putc_
+0000039a       puts_
+000003d1       _printf
+0000062d+      printf_number_
+0000092e+      _g_HexChars
 
 
                         +---------------------+
@@ -67,17 +76,22 @@ Module          Segment               Class           Address         Size
 ======          =======               =====           =======         ====
 
 main.asm        _ENTRY                CODE           00000000         00000013
-x86.asm         _TEXT                 CODE           00000013         00000041
+x86.asm         _TEXT                 CODE           00000013         00000112
+/mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/disk.c
+                _TEXT                 CODE           00000125         000001c4
+                CONST                 DATA           000008a2         00000000
+                CONST2                DATA           0000092e         00000000
+                _DATA                 DATA           00000940         00000000
 /mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/main.c
-                _TEXT                 CODE           00000054         0000008a
-                CONST                 DATA           0000060c         0000008c
-                CONST2                DATA           00000698         00000000
-                _DATA                 DATA           000006aa         00000000
+                _TEXT                 CODE           000002e9         0000008a
+                CONST                 DATA           000008a2         0000008c
+                CONST2                DATA           0000092e         00000000
+                _DATA                 DATA           00000940         00000000
 /mnt/c/Projects/workspace/Custom_OS/src/bootloader/stage2/stdio.c
-                _TEXT                 CODE           000000de         0000052e
-                CONST                 DATA           00000698         00000000
-                CONST2                DATA           00000698         00000011
-                _DATA                 DATA           000006aa         00000000
+                _TEXT                 CODE           00000373         0000052e
+                CONST                 DATA           0000092e         00000000
+                CONST2                DATA           0000092e         00000011
+                _DATA                 DATA           00000940         00000000
 Warning! W1014: stack segment not found
 
 
@@ -86,6 +100,6 @@ Warning! W1014: stack segment not found
                         +-----------------------+
 
 Stack size:  0200 (512.)
-Memory size:  06aa (1706.)
+Memory size:  0940 (2368.)
 Entry point address: 00000000
 Link time: 00:00.00
