@@ -2,18 +2,19 @@
     "configurations": [
         {
             "name": "Watcom",
-            "intelliSensePath": [
-                "A list of preprocessor definitions for the IntelliSense engine to use while parsing files. Optionally, use = to set a value, e.g. VERSION=1."
+            "includePath": [
+                "${workspaceFolder}/**"
             ],
             "defines": [
-                "__cdecl"
+                "_cdecl=",
+                "far="
             ],
-            "compilerPath": "/mnt/c/WATCOM/binl/wcc",
+            "compilerPath": "/usr/bin/watcom/binl/wcc",
             "cStandard": "c99",
             "cppStandard": "c++14",
             "intelliSenseMode": "clang-x64",
             "compilerArgs": [
-                "-4 -d3 -s -wx -ms -z1 -zq"
+                "-4 -d3 -s -wx -ms -zl -zq"
             ]
         }
     ],

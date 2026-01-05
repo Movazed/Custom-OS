@@ -1,0 +1,86 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Assemble bootloader",
+      "type": "shell",
+      "command": "nasm",
+      "args": [
+        "-f", "bin",
+        "src/boot.asm",
+        "-o", "build/boot.bin"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      }
+    },
+    {
+      "label": "Compile kernel",
+      "type": "shell",
+      "command": "/mnt/c/WATCOM/binl/wcc",
+      "args": [
+        "-4",
+        "-d3",
+        "-s",
+        "-wx",
+        "-ms",
+        "-z1",
+        "-zq",
+        "src/kernel.c",
+        "-fo=build/kernel.obj"
+      ],
+      "group": "build",
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      }
+    },
+    {
+      "label": "Link kernel",
+      "type": "shell",
+      "command": "/mnt/c/WATCOM/binl/wlink",
+      "args": [
+        "SYSTEM dos",
+        "FILE build/kernel.obj",
+        "NAME build/kernel.bin"
+      ],
+      "group": "build",
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      }
+    },
+    {
+      "label": "Run QEMU",
+      "type": "shell",
+      "command": "qemu-system-i386",
+      "args": [
+        "-fda", "build/os-image.bin",
+        "-boot", "a"
+      ],
+      "dependsOn": [
+        "Assemble bootloader",
+        "Compile kernel",
+        "Link kernel"
+      ],
+      "group": "test",
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      }
+    }
+  ]
+}
